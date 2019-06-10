@@ -1,0 +1,14 @@
+- Voir client start, handler_get pour gerer fichier. Besoin de modifier boucle de reception de client start. Gestion de packet -> lire packet header -> recevoir corps packet.
+- Verifier memoire sur LS
+- Free uniquement ce qui est dans le fils quand on le quitte et pas ce qui est dans le pere.
+- Ajouter un pointer entre la response et le server. (Pour pouvoir acceder au contexte)
+- Leaks stoc quand il y a plus d'un argument.
+
+-> Verifier structure du serveur.
+
+Bonus:
+- SETPROMPT
+- HELP
+- MKDIR
+- RMDIR
+- Login ?

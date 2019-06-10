@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/04 18:53:40 by tiboitel          #+#    #+#             */
-/*   Updated: 2018/10/08 17:52:12 by tiboitel         ###   ########.fr       */
+/*   Created: 2018/07/05 00:24:01 by tiboitel          #+#    #+#             */
+/*   Updated: 2018/07/07 21:12:26 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "server.h"
 
-#include "client.h"
-
-void		ft_usage(void)
+void	handler_command_not_found(t_command *command, t_ftp_response *response)
 {
-	printf("Usage: client [host-name] [port]");
-}
-
-int			main(int argc, char **argv)
-{
-	t_ftp_client	*client;
-
-	if (argc != 3)
-	{
-		ft_usage();
-		return (0);
-	}
-	if ((client = client_create()) == NULL)
-		return (-1);
-	if ((client_init(client, argv[1], ft_atoi(argv[2])) < 0))
-		return (-1);
-	client_start(client);
-	client_close(client);
-	return (0);
+	(void)command;
+	response->code = 502;
+	response->message = ft_strdup("Command not implemented");
+	dprintf(response->send_fd, "%d %s %s", response->code, response->message, CLRF);
 }
