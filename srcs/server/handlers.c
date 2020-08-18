@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 22:19:13 by tiboitel          #+#    #+#             */
-/*   Updated: 2018/11/29 18:20:16 by tiboitel         ###   ########.fr       */
+/*   Updated: 2020/08/18 17:37:39 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ void	handler_get(t_command *command, t_ftp_response *response)
 	struct stat		stats;
 	char			*buffer;
 
-	(void)command;
-	(void)response;
-	if ((fd = open(command->args, O_RDONLY)) < 0 ||
+	fd = 0;
+	if (command->args == NULL || ((fd = open(command->args, O_RDONLY)) < 0 ||
 		fstat(fd, &stats) < 0 || 
-			S_ISDIR(stats.st_mode))
+			S_ISDIR(stats.st_mode)))
 	{
 		dprintf(1, "Handler get: file unavailable.");
 		response->code = 550;
 		response->message = ft_strdup("The requested file is not available.");
+		close(fd);
 	}
 	else
 	{
